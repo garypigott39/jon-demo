@@ -23,7 +23,7 @@ Tables (all in the `demo` schema of the `demo` database):
 
 2. Run the `sql/schema.sql` script as a superuser. It creates:
    - a `demo-owner` role that owns the `demo` schema and everything in it
-   - a login role for you, granted membership of `demo-owner` (so you inherit its privileges without needing separate `GRANT`s)
+   - a login role for you, granted membership of `demo-owner` (so you inherit its privileges without needing separate `GRANT` statements)
    - the `demo` schema and its four tables
    - Replace `gary` in `sql/schema.sql` with your own OS/Postgres username
 
@@ -57,4 +57,9 @@ Then open `http://127.0.0.1:5000/`.
 
 ## Notes on the `gary` username
 
-Throughout `sql/schema.sql`, `gary` is a stand-in for whichever OS/Postgres role should own and use this demo. If you're not that user, replace it before running the script. `app/models/lib/db.py` doesn't hardcode a username itself - it reads `PGUSER`/`PGPASSWORD` from the environment (or `.env`), so once the role in `schema.sql` matches your `.env`, the Python side needs no changes.
+Throughout `sql/schema.sql`, `gary` is a **stand-in** for whichever OS/Postgres role should own and use this demo. 
+
+Change this to be whatever you want and then set the credentials in the `.env` file.
+
+
+Enjoy!
