@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <style>
+        body { font-family: sans-serif; margin: 2rem; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 0.4rem 0.6rem; text-align: left; }
+        th { background: #f0f0f0; }
+        .toolbar { margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <p><a href="{{ url_for('index') }}">&larr; Back</a></p>
+    <h1>{{ title }}</h1>
+    {% if filter_label %}
+    <p>Filtered by {{ filter_label }} &mdash;
+        <a href="{{ url_for(route) }}">clear filter</a></p>
+    {% endif %}
+    <div class="toolbar">
+        <button type="button" disabled>+ Add</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                {% for col in columns %}<th>{{ headers[col] }}</th>{% endfor %}
+                {% if count_header %}<th>{{ count_header }}</th>{% endif %}
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                {% for col in columns %}<td>{{ row[col] }}</td>{% endfor %}
+                {% if count_header %}
+                <td>
+                    <a href="{{ url_for(count_target, **{count_fk: row['id']}) }}">
+                        {{ row['count'] }}
+                    </a>
+                </td>
+                {% endif %}
+                <td><button type="button" disabled>Edit</button></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="{{ columns|length + (2 if count_header else 1) }}">No rows</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
